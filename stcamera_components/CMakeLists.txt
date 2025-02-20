@@ -30,7 +30,10 @@ find_package(image_transport REQUIRED)
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-
+include_directories(${PROJECT_NAME}
+	PUBLIC
+  $ENV{STAPI_ROOT_PATH}/include/StApi
+)
 if(WIN32)
 link_directories($ENV{STAPI_ROOT_PATH}/lib/x64)
 else()

@@ -73,7 +73,7 @@ namespace stcamera
   void StCameraNode::initPublishers()
   {
     const std::string prefix = "~/";
-    msg_device_connection_ = create_publisher<stcamera_msgs::msg::DeviceConnection>(prefix + std::string(STMSG_device_connection), STCAMERA_QUEUE_SIZE);
+    msg_device_connection_ = create_publisher<stcamera_msgs::msg::DeviceConnection>(std::string(STMSG_device_connection), STCAMERA_QUEUE_SIZE);
   }
 } // end of namespace stcamera
 

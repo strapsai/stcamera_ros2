@@ -292,6 +292,12 @@ namespace stcamera
           __FILE__,__func__,__LINE__, device_id.c_str(), 
           device_displayname.c_str(), x.GetDescription());
     }
+    catch(...)
+    {
+      RCLCPP_ERROR(p_stcamera_node_->get_logger(), "%s %s %d: Unable to open device %s (%s)",
+          __FILE__,__func__,__LINE__, device_id.c_str(), 
+          device_displayname.c_str());
+    }
     return false;
   }
   void StCameraNodeImpl::DetectingAndOpenningDevices()

@@ -38,9 +38,9 @@ namespace stcamera
       const std::string &camera_namespace, 
       StParameter *param,
       rclcpp::Clock &clock):
-    nh_(parent_nh->create_sub_node(camera_namespace)),
+    nh_(parent_nh->create_sub_node("camera")),
     parent_nh_(parent_nh),
-    camera_namespace_(camera_namespace),
+    camera_namespace_("camera"),
     param_(param),
     clock_(clock)
   {

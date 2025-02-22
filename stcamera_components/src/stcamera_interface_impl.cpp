@@ -2368,9 +2368,7 @@ namespace stcamera
   {
     msg_chunk_ = nh_->create_publisher<stcamera_msgs::msg::Chunk>(std::string(STMSG_chunk), queue_size_);
 
-    std::string msg_name = nh_->get_effective_namespace();
-    msg_name = msg_name + "/";
-    msg_name = msg_name + STMSG_image;
+    std::string msg_name = std::string("") + STMSG_image;
     it_campub_ = image_transport::create_camera_publisher(nh_.get(), msg_name);
   }
   void StCameraInterfaceImpl::initServices()

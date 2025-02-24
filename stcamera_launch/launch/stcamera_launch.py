@@ -35,12 +35,12 @@ def generate_launch_description():
     )
     declare_namespace_value_cmd = DeclareLaunchArgument(
         'namespace_value',
-        default_value='multispectral_camera',
+        default_value='multispectral',
         description='Namespace.'
     )
     declare_node_name_cmd = DeclareLaunchArgument(
         'node_name',
-        default_value='multispectral_camera',
+        default_value='multispectral',
         description='Name of the node.'
     )
 

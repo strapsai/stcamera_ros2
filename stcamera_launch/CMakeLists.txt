@@ -3,7 +3,7 @@ project(stcamera_launch)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -15,7 +15,8 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rcutils REQUIRED)
 find_package(rclcpp_components REQUIRED)
-
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(lifecycle_msgs REQUIRED)
 find_package(stcamera_components REQUIRED)
 find_package(stcamera_msgs REQUIRED)
 
@@ -42,7 +43,8 @@ ament_target_dependencies(${PROJECT_NAME}
   rcutils
   stcamera_components
   stcamera_msgs
-
+  rclcpp_lifecycle
+  lifecycle_msgs
   image_transport
   camera_info_manager
 )

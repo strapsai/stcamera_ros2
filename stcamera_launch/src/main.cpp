@@ -29,25 +29,67 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <stcamera_components/stcamera_node.hpp>
+#include "rclcpp_lifecycle/lifecycle_node.hpp"
+#include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
+
+class StCAmeraLifecycleNode : public rclcpp_lifecycle::LifecycleNode
+{
+public:
+    StCAmeraLifecycleNode(rclcpp::NodeOptions options) : LifecycleNode("st_camera_lifecycle_node")
+    {
+        st_camera_node_ = std::make_shared<stcamera::StCameraNode>(options);
+    }
+    stcamera::StCameraNode::SharedPtr st_camera_node_;
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_configure(const rclcpp_lifecycle::State & state) override
+    {
+        RCLCPP_INFO(get_logger(), "Configuring...");
+        return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    }
+
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_activate(const rclcpp_lifecycle::State & state) override
+    {
+        RCLCPP_INFO(get_logger(), "Activating...");
+        return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    }
+
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State & state) override
+    {
+        RCLCPP_INFO(get_logger(), "Deactivating...");
+        // optional_publisher_->
+        return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    }
+
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_cleanup(const rclcpp_lifecycle::State & state) override
+    {
+        RCLCPP_INFO(get_logger(), "Cleaning up...");
+        return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    }
+
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_shutdown(const rclcpp_lifecycle::State & state) override
+    {
+        RCLCPP_INFO(get_logger(), "Shutting down...");
+        rclcpp::shutdown(); // Exit the node cleanly
+        return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    }
+
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_error(const rclcpp_lifecycle::State & state) override
+    {
+        RCLCPP_ERROR(get_logger(), "Error occurred");
+        return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::FAILURE;
+    }
+};
+
 
 int main(int argc, char **argv)
 {
   rclcpp::init(argc, argv);
-  
   rclcpp::NodeOptions options;
   options.automatically_declare_parameters_from_overrides(true);
-  auto node = std::make_shared<stcamera::StCameraNode>(options);
-
-  try
-  {
-    rclcpp::spin(node);
-    rclcpp::shutdown();
-  }
-  catch(const std::exception& e)
-  {
-    std::cerr << e.what() << std::endl;
-    return EXIT_FAILURE;
-  }
-
-  return EXIT_SUCCESS;
+  auto node = std::make_shared<StCAmeraLifecycleNode>(options);
+  rclcpp::executors::MultiThreadedExecutor executor;
+  executor.add_node(node->get_node_base_interface());
+  executor.add_node(node->st_camera_node_);
+  executor.spin();
+  rclcpp::shutdown();
+  return 0;
 }

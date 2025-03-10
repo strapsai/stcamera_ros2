@@ -26,7 +26,8 @@ find_package(sensor_msgs REQUIRED)
 
 find_package(camera_info_manager REQUIRED)
 find_package(image_transport REQUIRED)
-
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(lifecycle_msgs REQUIRED)
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
@@ -74,7 +75,8 @@ endif()
 ament_target_dependencies(${PROJECT_NAME}
   stcamera_msgs
   rclcpp
-  #rclcpp_action
+  rclcpp_lifecycle
+  lifecycle_msgs
   rclcpp_components
   rcutils
   sensor_msgs

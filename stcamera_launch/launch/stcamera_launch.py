@@ -14,7 +14,7 @@ def generate_launch_description():
     
     # adapt if needed
     debug = False
-    respawn = False
+    respawn = True
 
     default_config_file = os.path.join(
         get_package_share_directory('stcamera_launch'),
@@ -58,14 +58,28 @@ def generate_launch_description():
         package='stcamera_launch',        
         namespace=namespace_value,
         executable='stcamera_launch',
-        name=node_name,
         output='screen',
         respawn=respawn,
+        respawn_delay=10,
         emulate_tty=True,
         prefix=launch_prefix,
         parameters=[
             config_file
         ]
+    )
+
+    monitor_node = Node(
+            package='payload_health_monitor',
+            executable='monitor',
+            name='monitor',
+            namespace=namespace_value,  # Namespace
+            output='screen',  # Output
+            parameters=[{
+                "topic_name":"image_raw",
+                "datatype": "image",
+                "main_node_name": "st_camera_lifecycle_node",
+                "startup_time":6
+                }]  # Parameters
     )
 
     # Define LaunchDescription variable and return it
@@ -76,5 +90,6 @@ def generate_launch_description():
     ld.add_action(declare_node_name_cmd)
 
     ld.add_action(stcamera_node)
+    ld.add_action(monitor_node)
 
     return ld

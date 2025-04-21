@@ -35,6 +35,8 @@
     # #namespace would be: dev_STC_MCS510U3V_00C0XXX_ and dev_00_11_1c_f6_yy_xx
     camera_to_connect: ["all"]
     #camera_to_connect: ["142100000000"]
+    #
+    camera_tf_frame: "undefined"
 
     # logger_level: value
     # value: Logger level of the main and camera nodes.

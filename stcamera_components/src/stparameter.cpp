@@ -41,7 +41,8 @@ namespace stcamera
   }
 
   void StParameter::loadCameraList(const rclcpp::Node *nh, 
-      std::vector<std::string> &camera_to_connect)
+      std::vector<std::string> &camera_to_connect,
+      std::string &camera_tf_frame)
   {
     vec_camera_to_connect_.clear();
     camera_to_connect.clear();
@@ -66,6 +67,24 @@ namespace stcamera
 
       // fill in the return arguments
       camera_to_connect.push_back(device_id);
+    }
+
+    if (nh->has_parameter("camera_tf_frame"))
+    {
+      nh->get_parameter("camera_tf_frame", camera_tf_frame);
+      if (camera_tf_frame == "undefined"){
+        std::cerr << "Camera TF is set to undefined! Please configure it in the .yaml file" << std::endl;
+        return;
+      }
+    }
+    else
+    {
+      if (camera_tf_frame == "undefined"){
+        std::cerr << "Camera TF is undefined! Please configure it in the .yaml file" << std::endl;
+        camera_tf_frame = "undefined";
+        return;
+      }
+      
     }
   }
 

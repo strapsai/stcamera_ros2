@@ -157,7 +157,14 @@ namespace stcamera
   void StCameraNodeImpl::initSystemsAndInterfaces()
   {
     std::vector<std::string> camera_to_connect;
-    p_stcamera_node_->param_.loadCameraList(p_stcamera_node_, camera_to_connect);
+    p_stcamera_node_->param_.loadCameraList(p_stcamera_node_, camera_to_connect, camera_tf_frame);
+
+    if (camera_tf_frame == "undefined"){
+      RCLCPP_ERROR(p_stcamera_node_->get_logger(), "%s %s %d: Camera TF Frame is UNDEFINED!",
+          __FILE__,__func__,__LINE__);
+
+      return;
+    }
 
     std::string allowed="Allowed camera: ";
     if (p_stcamera_node_->param_.connectAllCamera()) 
@@ -208,7 +215,9 @@ namespace stcamera
 
   }
   bool StCameraNodeImpl::initializeCamera(StApi::IStInterface *p_iface,
-      const StApi::IStDeviceInfo *p_devinfo)
+      const StApi::IStDeviceInfo *p_devinfo,
+      std::string camera_tf_frame
+      )
   {
     if (p_iface == nullptr || p_devinfo == nullptr)
     {
@@ -222,6 +231,9 @@ namespace stcamera
     RCLCPP_DEBUG(p_stcamera_node_->get_logger(), "  Display Name:%s", device_displayname.c_str());
     std::string device_userdefinedname = std::string(p_devinfo->GetUserDefinedName() );
     RCLCPP_DEBUG(p_stcamera_node_->get_logger(), "  User Defined Name:%s", device_userdefinedname.c_str());
+
+    RCLCPP_DEBUG(p_stcamera_node_->get_logger(), "  Camera TF Frame:%s", camera_tf_frame.c_str());
+
     std::string key = "";
     if (p_stcamera_node_->param_.connectAllCamera() || p_stcamera_node_->param_.connectFirstCameraOnly())
     {
@@ -268,7 +280,7 @@ namespace stcamera
           GenTL::DEVICE_ACCESS_CONTROL);
 
       StCameraInterface *pcif = new StCameraInterfaceImpl(
-          dev, p_stcamera_node_, key, &p_stcamera_node_->param_, clock_);
+          dev, p_stcamera_node_, key, camera_tf_frame, &p_stcamera_node_->param_, clock_);
       map_camera_[key] = pcif;
 
       // store and publish connection msg
@@ -379,7 +391,7 @@ namespace stcamera
             {
               const StApi::IStDeviceInfo *p_devinfo = 
                   p_iface->GetIStDeviceInfo(k);
-              bool init_ok = initializeCamera(p_iface, p_devinfo);
+              bool init_ok = initializeCamera(p_iface, p_devinfo, camera_tf_frame);
               if (init_ok && connect_first_camera_only) 
               {
                 return;

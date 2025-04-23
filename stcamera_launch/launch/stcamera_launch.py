@@ -72,7 +72,8 @@ def generate_launch_description():
         prefix=launch_prefix,
         parameters=[
             config_file,
-            "tf_frame": node_name+'/'+tf_frame
+            "tf_frame": tf_frame
+            "node_name": node_name
 
         ]
     )
@@ -97,6 +98,7 @@ def generate_launch_description():
     ld.add_action(declare_config_file_cmd)
     ld.add_action(declare_namespace_value_cmd)
     ld.add_action(declare_node_name_cmd)
+    ld.add_action(declare_tf_frame_cmd)
 
     ld.add_action(stcamera_node)
     ld.add_action(monitor_node)

@@ -21,11 +21,13 @@ def generate_launch_description():
         'config',
         'default.yaml'
     )
+    default_tf_frame = 'optical_frame'
 
     # launch configuration variables
     config_file = LaunchConfiguration('config_file')
     namespace_value = LaunchConfiguration('namespace_value')
     node_name = LaunchConfiguration('node_name')
+    tf_frame = LaunchConfiguration('tf_frame')
 
     # launch arguments
     declare_config_file_cmd = DeclareLaunchArgument(
@@ -42,6 +44,11 @@ def generate_launch_description():
         'node_name',
         default_value='multispectral',
         description='Name of the node.'
+    )
+    declare_tf_frame_cmd = DeclareLaunchArgument(
+        'tf_frame',
+        default_value=default_tf_frame,
+        description='Camera TF frame to be declared in image message headers. Namespaced using the "namespace_value" parameter'
     )
 
     # log format
@@ -64,7 +71,9 @@ def generate_launch_description():
         emulate_tty=True,
         prefix=launch_prefix,
         parameters=[
-            config_file
+            config_file,
+            "tf_frame": node_name+'/'+tf_frame
+
         ]
     )
 

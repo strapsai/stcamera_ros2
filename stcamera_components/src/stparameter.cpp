@@ -69,9 +69,9 @@ namespace stcamera
       camera_to_connect.push_back(device_id);
     }
 
-    if (nh->has_parameter("camera_tf_frame"))
+    if (nh->has_parameter("tf_frame"))
     {
-      nh->get_parameter("camera_tf_frame", camera_tf_frame);
+      nh->get_parameter("tf_frame", camera_tf_frame);
       if (camera_tf_frame == "undefined"){
         std::cerr << "Camera TF is set to undefined! Please configure it in the .yaml file" << std::endl;
         return;

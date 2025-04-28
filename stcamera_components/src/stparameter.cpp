@@ -68,16 +68,14 @@ namespace stcamera
       camera_to_connect.push_back(device_id);
     }
 
-    if (nh->has_parameter("use_persistance_file"))
-    {
-      nh->get_parameter("use_persistance_file", use_persistance_file_);
 
-      if (use_persistance_file_){
-        if (nh->has_parameter("persistance_file"))
-        {
-          nh->get_parameter("persistance_file", persistance_file_);
-        }
-      }
+    if (nh->has_parameter("persistance_file"))
+    {
+      use_persistance_file_ = true;
+      nh->get_parameter("persistance_file", persistance_file_);
+    }
+    else {
+      use_persistance_file_ = false;
     }
   }
 

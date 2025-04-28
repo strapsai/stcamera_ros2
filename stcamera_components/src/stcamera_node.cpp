@@ -47,8 +47,7 @@ namespace stcamera
     get_logger().set_level(logger_level);
     RCLCPP_INFO(get_logger(), "Setting severity threshold to %d", (int)logger_level);
 
-    use_persistance_file = i_use_persistance_file;
-    persistance_file = i_persistance_file;
+    st_camera_node_impl_->setPersistanceFile(param_.use_persistance_file_, param_.persistance_file_);
 
     init();
   }

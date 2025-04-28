@@ -208,10 +208,7 @@ namespace stcamera
 
   }
   bool StCameraNodeImpl::initializeCamera(StApi::IStInterface *p_iface,
-      const StApi::IStDeviceInfo *p_devinfo,
-      bool use_persistance_file,
-      std::string persistance_file
-      )
+      const StApi::IStDeviceInfo *p_devinfo)
   {
     if (p_iface == nullptr || p_devinfo == nullptr)
     {
@@ -271,9 +268,7 @@ namespace stcamera
           GenTL::DEVICE_ACCESS_CONTROL);
 
       StCameraInterface *pcif = new StCameraInterfaceImpl(
-          dev, p_stcamera_node_, key, &p_stcamera_node_->param_, clock_,
-          use_persistance_file, persistance_file
-          );
+          dev, p_stcamera_node_, key, &p_stcamera_node_->param_, clock_);
       map_camera_[key] = pcif;
 
       // store and publish connection msg

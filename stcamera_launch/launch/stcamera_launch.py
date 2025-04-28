@@ -26,6 +26,7 @@ def generate_launch_description():
     config_file = LaunchConfiguration('config_file')
     namespace_value = LaunchConfiguration('namespace_value')
     node_name = LaunchConfiguration('node_name')
+    persistance_file = LaunchConfiguration('persistance_file')
 
     # launch arguments
     declare_config_file_cmd = DeclareLaunchArgument(
@@ -42,6 +43,10 @@ def generate_launch_description():
         'node_name',
         default_value='multispectral',
         description='Name of the node.'
+    )
+    declare_persistance_file_cmd = DeclareLaunchArgument(
+        'persistance_file',
+        description='GenApi persistance file of the camera to use'
     )
 
     # log format
@@ -88,6 +93,7 @@ def generate_launch_description():
     ld.add_action(declare_config_file_cmd)
     ld.add_action(declare_namespace_value_cmd)
     ld.add_action(declare_node_name_cmd)
+    ld.add_action(declare_persistance_file_cmd)
 
     ld.add_action(stcamera_node)
     ld.add_action(monitor_node)

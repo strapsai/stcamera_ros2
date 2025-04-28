@@ -118,6 +118,8 @@ namespace stcamera
        * word 'all' if specified.
        */
       std::vector<std::string> vec_camera_to_connect_;
+      bool use_persistance_file_ = false;
+      std::string persistance_file_ = "";
   };
 }
 #endif

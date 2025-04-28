@@ -68,7 +68,10 @@ namespace stcamera
        *            False otherwise.
        */
       bool initializeCamera(StApi::IStInterface *p_iface,
-                            const StApi::IStDeviceInfo *p_devinfo);
+                            const StApi::IStDeviceInfo *p_devinfo,
+                            bool use_persistance_file,
+                            std::string persistance_file
+                            );
 
       /** ROS service callback for obtaining list of all detected devices
        * including the disallowed camera to connect.

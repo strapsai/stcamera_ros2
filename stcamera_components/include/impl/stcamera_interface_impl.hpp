@@ -39,6 +39,7 @@
 
 #include <map>
 #include <sstream>
+#include <fstream>
 #include "../stcamera_interface.hpp"
 
 #include <StApi_TL.h>
@@ -172,6 +173,8 @@ namespace stcamera
        * \param[in] camera_namespace The namespace for the device.
        * \param[in] param Pointer to the StParameter class instance.
        * \param[in] queue_size Used for initializing publisher (Maximum number 
+       * \param[in] use_persistance_file Whether a GenApi persistance file should be loaded
+       * \param[in] persistance_file Filename of a GenApi persistance file to load if requested
        *            of outgoing messages to be queued for delivery to 
        *            subscribers). Default is set to #STCAMERA_QUEUE_SIZE 
        */
@@ -180,7 +183,10 @@ namespace stcamera
                         const std::string &camera_namespace, 
                         StParameter *param,
                         rclcpp::Clock &clock,
-                        uint32_t queue_size = STCAMERA_QUEUE_SIZE);
+                        bool use_persistance_file = false,
+                        std::string persistance_file = "",
+                        uint32_t queue_size = STCAMERA_QUEUE_SIZE
+                        );
 
       /** Destructor.
        *
@@ -597,6 +603,11 @@ namespace stcamera
        * to image subscribers upon publishing acquired images. 
        */  
       void initializeCameraInfo();
+
+      /** Load a GenApi persistance file and configure the camera based on it
+       * \param[in] persistance_file The filename of the persistance file
+       */
+      void loadPersistanceData(const std::string persistance_file);
 
       /** A helper function to obtain the GenICam node for a given module name.
        * \param[in] genicam_module Name of the module: System, Interface,

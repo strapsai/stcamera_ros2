@@ -78,7 +78,7 @@ def generate_launch_description():
                 "topic_name":"image_raw",
                 "datatype": "image",
                 "main_node_name": "st_camera_lifecycle_node",
-                "startup_time":20
+                "startup_time":200
                 }]  # Parameters
     )
 

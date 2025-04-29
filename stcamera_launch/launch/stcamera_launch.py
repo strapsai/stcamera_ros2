@@ -80,19 +80,19 @@ def generate_launch_description():
         ]
     )
 
-#    monitor_node = Node(
-#            package='payload_health_monitor',
-#            executable='monitor',
-#            name='monitor',
-#            namespace=namespace_value,  # Namespace
-#            output='screen',  # Output
-#            parameters=[{
-#                "topic_name":"image_raw",
-#                "datatype": "image",
-#                "main_node_name": "st_camera_lifecycle_node",
-#                "startup_time":20
-#                }]  # Parameters
-#    )
+    monitor_node = Node(
+            package='payload_health_monitor',
+            executable='monitor',
+            name='monitor',
+            namespace=namespace_value,  # Namespace
+            output='screen',  # Output
+            parameters=[{
+                "topic_name":"image_raw",
+                "datatype": "image",
+                "main_node_name": "st_camera_lifecycle_node",
+                "startup_time":20
+                }]  # Parameters
+    )
 
     # Define LaunchDescription variable and return it
     ld = LaunchDescription()
@@ -103,6 +103,6 @@ def generate_launch_description():
     ld.add_action(declare_tf_frame_cmd)
 
     ld.add_action(stcamera_node)
-#    ld.add_action(monitor_node)
+    ld.add_action(monitor_node)
 
     return ld

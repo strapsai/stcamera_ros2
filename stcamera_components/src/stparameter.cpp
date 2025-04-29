@@ -75,15 +75,21 @@ namespace stcamera
       nh->get_parameter("node_name", node_name);
     }
 
+    std::string robot_name = "";
+    if (nh->has_parameter("robot_name"))
+    {
+      nh->get_parameter("robot_name", robot_name);
+    }
+
     std::string base_tf_frame;
     if (nh->has_parameter("tf_frame"))
     {
       nh->get_parameter("tf_frame", base_tf_frame);
-      if (node_name == ""){
+      if ((robot_name == "") || (node_name == "")){
         camera_tf_frame = base_tf_frame;
       }
       else{
-        camera_tf_frame = node_name+'/'+base_tf_frame;
+        camera_tf_frame = robot_name+'/'+node_name+'/'+base_tf_frame;
       }
     }
     else

@@ -60,6 +60,8 @@ def generate_launch_description():
     else:
         launch_prefix = ''
 
+    robot_name = os.getenv('ROBOT_NAME', 'spot?')
+    
     # node
     stcamera_node = Node(
         package='stcamera_launch',        
@@ -74,7 +76,8 @@ def generate_launch_description():
             config_file,
             {
             "tf_frame": tf_frame,
-            "node_name": node_name
+            "node_name": node_name,
+            "robot_name": robot_name
             }
 
         ]

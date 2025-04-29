@@ -47,7 +47,6 @@ namespace stcamera
     get_logger().set_level(logger_level);
     RCLCPP_INFO(get_logger(), "Setting severity threshold to %d", (int)logger_level);
 
-    st_camera_node_impl_->setPersistanceFile(param_.use_persistance_file_, param_.persistance_file_);
 
     init();
   }
@@ -60,6 +59,8 @@ namespace stcamera
   void StCameraNode::init()
   {
     st_camera_node_impl_->initSystemsAndInterfaces();
+    RCLCPP_INFO(get_logger(),"stcamera_node.cpp: Setting persistance file to %s", param_.persistance_file_.c_str());
+    st_camera_node_impl_->setPersistanceFile(param_.use_persistance_file_, param_.persistance_file_);
     initPublishers();
     initServices();
     timer_ = create_wall_timer(1s, std::bind(&StCameraNodeImpl::DetectingAndOpenningDevices, st_camera_node_impl_));

@@ -46,6 +46,7 @@ def generate_launch_description():
     )
     declare_persistance_file_cmd = DeclareLaunchArgument(
         'persistance_file',
+        default_value='',
         description='GenApi persistance file of the camera to use'
     )
 
@@ -69,7 +70,10 @@ def generate_launch_description():
         emulate_tty=True,
         prefix=launch_prefix,
         parameters=[
-            config_file
+            config_file,
+            {
+            "persistance_file": persistance_file
+            }
         ]
     )
 
@@ -96,6 +100,6 @@ def generate_launch_description():
     ld.add_action(declare_persistance_file_cmd)
 
     ld.add_action(stcamera_node)
-    ld.add_action(monitor_node)
+    #ld.add_action(monitor_node)
 
     return ld

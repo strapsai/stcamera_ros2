@@ -213,6 +213,7 @@ namespace stcamera
       ){
     use_persistance_file = i_use_persistance_file;
     if (use_persistance_file){
+      RCLCPP_INFO(p_stcamera_node_->get_logger(),"stcamera_node_impl.cpp: Setting persistance file to %s", persistance_file.c_str());
       persistance_file = i_persistance_file;
     }
   }

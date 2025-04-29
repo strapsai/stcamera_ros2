@@ -100,6 +100,6 @@ def generate_launch_description():
     ld.add_action(declare_persistance_file_cmd)
 
     ld.add_action(stcamera_node)
-    #ld.add_action(monitor_node)
+    ld.add_action(monitor_node)
 
     return ld

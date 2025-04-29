@@ -74,7 +74,7 @@ namespace stcamera
     if (nh->has_parameter("persistance_file"))
     {
       nh->get_parameter("persistance_file", persistance_file_);
-      RCLCPP_INFO(nh->get_logger(),"stparameter.cpp: Setting persistance file to %s", persistance_file_.c_str());
+      //RCLCPP_INFO(nh->get_logger(),"stparameter.cpp: Setting persistance file to %s", persistance_file_.c_str());
       if (persistance_file_ != ""){
         use_persistance_file_ = true;
       }

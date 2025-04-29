@@ -59,7 +59,7 @@ namespace stcamera
   void StCameraNode::init()
   {
     st_camera_node_impl_->initSystemsAndInterfaces();
-    RCLCPP_INFO(get_logger(),"stcamera_node.cpp: Setting persistance file to %s", param_.persistance_file_.c_str());
+    //RCLCPP_INFO(get_logger(),"stcamera_node.cpp: Setting persistance file to %s", param_.persistance_file_.c_str());
     st_camera_node_impl_->setPersistanceFile(param_.use_persistance_file_, param_.persistance_file_);
     initPublishers();
     initServices();

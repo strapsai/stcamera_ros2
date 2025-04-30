@@ -69,7 +69,7 @@ namespace stcamera
        */
       bool initializeCamera(StApi::IStInterface *p_iface,
                             const StApi::IStDeviceInfo *p_devinfo,
-                            std::string camera_tf_frame
+                            const std::string camera_tf_frame
                             );
 
       /** ROS service callback for obtaining list of all detected devices

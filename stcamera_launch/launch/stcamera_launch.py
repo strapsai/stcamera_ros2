@@ -60,7 +60,7 @@ def generate_launch_description():
     else:
         launch_prefix = ''
 
-    robot_name = os.getenv('ROBOT_NAME', 'spot?')
+    robot_name = os.getenv('ROBOT_NAME', 'UNDEFINED_ROBOT')
     
     # node
     stcamera_node = Node(

@@ -85,7 +85,7 @@ namespace stcamera
     class CImageAllocator : public StApi::IStAllocator
     {
     public:
-        explicit CImageAllocator(const std::string &camera_namespace) : camera_namespace_(camera_namespace)
+        explicit CImageAllocator(const std::string &camera_namespace, const std::string &camera_frame) : camera_namespace_(camera_namespace), camera_frame_(camera_frame)
         {}
 
         // Function for memory allocation.
@@ -95,7 +95,7 @@ namespace stcamera
             {
                 sensor_msgs::msg::Image *pimage = new sensor_msgs::msg::Image();
 
-                pimage->header.frame_id = camera_namespace_;
+                pimage->header.frame_id = camera_frame_;
 
                 // Memory allocation of the requested size.
                 pimage->data.resize(nSize);
@@ -151,6 +151,7 @@ namespace stcamera
     protected:
         std::map<void *, sensor_msgs::msg::Image *> map_buffer_image_;
         const std::string camera_namespace_;
+        const std::string camera_frame_;
     };
 #endif //ENABLED_STAPI_ZERO_COPY
 
@@ -178,6 +179,7 @@ namespace stcamera
       StCameraInterfaceImpl(StApi::IStDeviceReleasable *dev,
                         rclcpp::Node *nh_parent, 
                         const std::string &camera_namespace, 
+                        const std::string &camera_frame, 
                         StParameter *param,
                         rclcpp::Clock &clock,
                         uint32_t queue_size = STCAMERA_QUEUE_SIZE);
@@ -787,6 +789,9 @@ namespace stcamera
 
       /** Server for send_soft_trigger */
       rclcpp::Service<stcamera_msgs::srv::SendSoftTrigger>::SharedPtr srv_send_soft_trigger_;  
+
+    private:
+      std::string camera_frame_ = "undefined";
   };
 }
 #endif //STCAMERA_STCAMERA_INTERFACE_IMPL_H

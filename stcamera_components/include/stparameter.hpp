@@ -73,7 +73,8 @@ namespace stcamera
        *              special keyword 'all'.
        */
       void loadCameraList(const rclcpp::Node *nh, 
-                         std::vector<std::string> &camera_to_connect);
+                         std::vector<std::string> &camera_to_connect,
+                         std::string &camera_tf_frame);
 
       /** Check if the node shall connect to only the first found camera.
        *

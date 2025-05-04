@@ -68,7 +68,9 @@ namespace stcamera
        *            False otherwise.
        */
       bool initializeCamera(StApi::IStInterface *p_iface,
-                            const StApi::IStDeviceInfo *p_devinfo);
+                            const StApi::IStDeviceInfo *p_devinfo,
+                            const std::string camera_tf_frame
+                            );
 
       /** ROS service callback for obtaining list of all detected devices
        * including the disallowed camera to connect.
@@ -129,6 +131,8 @@ namespace stcamera
       const std::string stcamera_node_text_;
 
     private:
+
+      std::string camera_tf_frame = "undefined";
 
       /** Guard to prevent race when looking for new devices. */
       std::mutex mtx_update_device_list_;

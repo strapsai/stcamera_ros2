@@ -94,16 +94,9 @@ Examples:
 * **camera_to_connect: ["00:11:1c:f6:yy:xx","STC-MCS510U3V(00XXYY0)"]**: Only GigEVision camera with MAC address "00:11:1c:f6:yy:xx" and USB3 Vision camera of which model is "STC-MCS510U3V", with serial number "00XXYY0" will be used.
 * **camera_to_connect: ["14210003XXYY"]**: A camera with ID "14210003 XXYY" will be used.
 
-
 * **node_name** : Specify the name of the node. Defaults to `multispectral`.
 * **tf_frame** : Specify the TF2 `frame_id` that will be declared in the camera image header. This parameter is mandatory. If parameter `node_name` is also filled and `$ROBOT_NAME` is defined in the environment, the declared TF2 `frame_id` wil be formatted as `<robot_name>/<node_name>/<tf_frame>`.
 
-Examples:
-
-* **camera_to_connect: []**: The first camera detected is used.
-* **camera_to_connect: ["all"]**: All detected cameras are used.
-* **camera_to_connect: ["00:11:1c:f6:yy:xx","STC-MCS510U3V(00XXYY0)"]**: Only GigEVision camera with MAC address "00:11:1c:f6:yy:xx" and USB3 Vision camera of which model is "STC-MCS510U3V", with serial number "00XXYY0" will be used.
-* **camera_to_connect: ["14210003XXYY"]**: A camera with ID "14210003 XXYY" will be used.
 ### 3.2. Camera Namespace
 StCameraNode declares a topic and service for each camera. Each camera's namespace used to access individual camera topics and services is automatically generated using the following rules:
 

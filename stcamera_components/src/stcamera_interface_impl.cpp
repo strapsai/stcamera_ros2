@@ -44,6 +44,7 @@ namespace stcamera
       StApi::IStDeviceReleasable *dev,
       rclcpp::Node *parent_nh, 
       const std::string &camera_namespace, 
+      const std::string &camera_frame, 
       StParameter *param,
       rclcpp::Clock &clock,
       bool use_persistance_file,
@@ -60,7 +61,7 @@ namespace stcamera
     bool_event_datastream_(false),
     destroyed_(false)
 #if ENABLED_STAPI_ZERO_COPY
-    , image_allocator_(camera_namespace)
+    , image_allocator_(camera_namespace, camera_frame)
     , p_stimage_buffer_(CreateIStImageBuffer(&image_allocator_))
     , p_stpixel_format_converter_(CreateIStConverter(StConverterType_PixelFormat))
 #endif //ENABLED_STAPI_ZERO_COPY
@@ -71,6 +72,8 @@ namespace stcamera
 
     std::lock_guard<std::mutex> lock1(mtx_acquisition_);
     std::lock_guard<std::mutex> lock2(mtx_event_);
+
+    camera_frame_ = camera_frame;
 
     // initialize default_event
     std::string default_event = STMSG_event;
@@ -778,7 +781,7 @@ namespace stcamera
             sensor_msgs::msg::Image* pimage = image_allocator_.get_image(p_stimage->GetImageBuffer());
 #else
             sensor_msgs::msg::Image* pimage = &image_;
-            pimage->header.frame_id = camera_namespace_;
+            pimage->header.frame_id = camera_frame_;
 #endif //ENABLED_STAPI_ZERO_COPY
 
             pimage->header.stamp = timestamp;
@@ -2248,7 +2251,7 @@ namespace stcamera
       GenApi::CNodeMapPtr mp = tl_dev_->GetRemoteIStPort()->GetINodeMap();
 
       // frame id
-      camera_info_.header.frame_id = camera_namespace_;
+      camera_info_.header.frame_id = camera_frame_;
       
       // binning x
       GenApi::CIntegerPtr bin_h_val(mp->GetNode(

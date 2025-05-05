@@ -41,7 +41,8 @@ namespace stcamera
   }
 
   void StParameter::loadCameraList(const rclcpp::Node *nh, 
-      std::vector<std::string> &camera_to_connect)
+      std::vector<std::string> &camera_to_connect,
+      std::string &camera_tf_frame)
   {
     vec_camera_to_connect_.clear();
     camera_to_connect.clear();
@@ -68,6 +69,38 @@ namespace stcamera
       camera_to_connect.push_back(device_id);
     }
 
+    std::string node_name = "";
+    if (nh->has_parameter("node_name"))
+    {
+      nh->get_parameter("node_name", node_name);
+    }
+
+    std::string robot_name = "";
+    if (nh->has_parameter("robot_name"))
+    {
+      nh->get_parameter("robot_name", robot_name);
+    }
+
+    std::string base_tf_frame;
+    if (nh->has_parameter("tf_frame"))
+    {
+      nh->get_parameter("tf_frame", base_tf_frame);
+      if ((robot_name == "") || (node_name == "")){
+        camera_tf_frame = base_tf_frame;
+      }
+      else{
+        camera_tf_frame = robot_name+'/'+node_name+'/'+base_tf_frame;
+      }
+    }
+    else
+    {
+      if (camera_tf_frame == "undefined"){
+        RCLCPP_ERROR(nh->get_logger(), "Camera TF is undefined! Please configure it in the .yaml file");
+        camera_tf_frame = "undefined";
+        return;
+      }
+      
+    }
 
     RCLCPP_INFO(nh->get_logger(),"stparameter.cpp: Will attempt to retrieve persistance file");
     use_persistance_file_ = false;

@@ -93,6 +93,8 @@ Examples:
 * **camera_to_connect: ["all"]**: All detected cameras are used.
 * **camera_to_connect: ["00:11:1c:f6:yy:xx","STC-MCS510U3V(00XXYY0)"]**: Only GigEVision camera with MAC address "00:11:1c:f6:yy:xx" and USB3 Vision camera of which model is "STC-MCS510U3V", with serial number "00XXYY0" will be used.
 * **camera_to_connect: ["14210003XXYY"]**: A camera with ID "14210003 XXYY" will be used.
+ 
+* **persistance_file** : Specify the GenAPI persistance file to use for camera configuration. This should contain the full path to the file.
 
 ### 3.2. Camera Namespace
 StCameraNode declares a topic and service for each camera. Each camera's namespace used to access individual camera topics and services is automatically generated using the following rules:

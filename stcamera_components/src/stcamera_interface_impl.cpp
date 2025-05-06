@@ -48,7 +48,7 @@ namespace stcamera
       StParameter *param,
       rclcpp::Clock &clock,
       bool use_persistance_file,
-      std::string persistance_file,
+      const std::string &persistance_file,
       uint32_t queue_size
       ):
     StCameraInterface(parent_nh, camera_namespace, param, clock),

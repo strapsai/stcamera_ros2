@@ -174,10 +174,10 @@ namespace stcamera
        * \param[in] camera_namespace The namespace for the device.
        * \param[in] param Pointer to the StParameter class instance.
        * \param[in] queue_size Used for initializing publisher (Maximum number 
-       * \param[in] use_persistance_file Whether a GenApi persistance file should be loaded
-       * \param[in] persistance_file Filename of a GenApi persistance file to load if requested
        *            of outgoing messages to be queued for delivery to 
        *            subscribers). Default is set to #STCAMERA_QUEUE_SIZE 
+       * \param[in] use_persistance_file Whether a GenApi persistance file should be loaded
+       * \param[in] persistance_file Filename of a GenApi persistance file to load if requested
        */
       StCameraInterfaceImpl(StApi::IStDeviceReleasable *dev,
                         rclcpp::Node *nh_parent, 

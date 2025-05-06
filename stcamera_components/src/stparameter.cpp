@@ -95,7 +95,7 @@ namespace stcamera
     else
     {
       if (camera_tf_frame == "undefined"){
-        RCLCPP_ERROR(nh->get_logger(), "Camera TF is undefined! Please configure it in the .yaml file");
+        RCLCPP_ERROR(nh->get_logger(), "Camera TF is undefined! Please pass it in as a 'tf_frame' parameter.");
         camera_tf_frame = "undefined";
         return;
       }

@@ -2312,7 +2312,7 @@ namespace stcamera
     GenApi::CFeatureBag cfbag;
     std::ifstream fstr(persistance_file.c_str());
     if (!fstr.good()){
-      std::cerr << "Failed to open persistance file:" << persistance_file << std::endl;
+      std::cerr << "Failed to open persistance file :" << persistance_file << std::endl;
       return;
     }
     fstr >> cfbag;

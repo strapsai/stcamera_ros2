@@ -51,6 +51,7 @@ def generate_launch_description():
         'tf_frame',
         default_value=default_tf_frame,
         description='Camera TF frame to be declared in image message headers. Namespaced using the "namespace_value" parameter'
+    )
 
     declare_persistance_file_cmd = DeclareLaunchArgument(
         'persistance_file',
@@ -84,7 +85,7 @@ def generate_launch_description():
             {
             "tf_frame": tf_frame,
             "node_name": node_name,
-            "robot_name": robot_name
+            "robot_name": robot_name,
             "persistance_file": persistance_file
             }
         ]

@@ -28,6 +28,7 @@ def generate_launch_description():
     namespace_value = LaunchConfiguration('namespace_value')
     node_name = LaunchConfiguration('node_name')
     tf_frame = LaunchConfiguration('tf_frame')
+    persistance_file = LaunchConfiguration('persistance_file')
 
     # launch arguments
     declare_config_file_cmd = DeclareLaunchArgument(
@@ -45,10 +46,17 @@ def generate_launch_description():
         default_value='multispectral',
         description='Name of the node.'
     )
+
     declare_tf_frame_cmd = DeclareLaunchArgument(
         'tf_frame',
         default_value=default_tf_frame,
         description='Camera TF frame to be declared in image message headers. Namespaced using the "namespace_value" parameter'
+    )
+
+    declare_persistance_file_cmd = DeclareLaunchArgument(
+        'persistance_file',
+        default_value='',
+        description='GenApi persistance file of the camera to use'
     )
 
     # log format
@@ -77,9 +85,9 @@ def generate_launch_description():
             {
             "tf_frame": tf_frame,
             "node_name": node_name,
-            "robot_name": robot_name
+            "robot_name": robot_name,
+            "persistance_file": persistance_file
             }
-
         ]
     )
 
@@ -104,6 +112,7 @@ def generate_launch_description():
     ld.add_action(declare_namespace_value_cmd)
     ld.add_action(declare_node_name_cmd)
     ld.add_action(declare_tf_frame_cmd)
+    ld.add_action(declare_persistance_file_cmd)
 
     ld.add_action(stcamera_node)
     ld.add_action(monitor_node)

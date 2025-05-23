@@ -102,6 +102,12 @@ namespace stcamera
           std::shared_ptr<stcamera_msgs::srv::GetModuleList_Response> res);
           
       void initSystemsAndInterfaces();
+
+      void setPersistanceFile(
+          bool i_use_persistance_file = false,
+          std::string i_persistance_file = ""
+          );
+
     protected:
       const std::string &getTextForMsg() const {return(stcamera_node_text_);}
       rclcpp::Logger get_logger()
@@ -129,6 +135,9 @@ namespace stcamera
       StCameraNode *p_stcamera_node_;
       
       const std::string stcamera_node_text_;
+
+      bool use_persistance_file = false;
+      std::string persistance_file = "";
 
     private:
 

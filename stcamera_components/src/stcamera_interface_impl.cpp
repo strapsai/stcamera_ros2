@@ -47,7 +47,10 @@ namespace stcamera
       const std::string &camera_frame, 
       StParameter *param,
       rclcpp::Clock &clock,
-      uint32_t queue_size):
+      bool use_persistance_file,
+      const std::string &persistance_file,
+      uint32_t queue_size
+      ):
     StCameraInterface(parent_nh, camera_namespace, param, clock),
     tl_dev_(dev),
     camera_info_manager_(nh_.get(), camera_namespace),
@@ -78,6 +81,10 @@ namespace stcamera
     map_msg_event_.insert(std::make_pair(default_event, def_event_));
 
     initDeviceAndDataStream();
+
+    if (use_persistance_file){
+      loadPersistanceData(persistance_file);
+    }
 
     // register event callback for GenTL modules Interface, and System
     ist_registered_callback_interface_ = StApi::RegisterCallback(tl_dev_->GetIStInterface(), *this,
@@ -2299,6 +2306,18 @@ namespace stcamera
     catch(...)
     {
     }
+  }
+
+  void StCameraInterfaceImpl::loadPersistanceData(const std::string persistance_file){
+    GenApi::CFeatureBag cfbag;
+    std::ifstream fstr(persistance_file.c_str());
+    if (!fstr.good()){
+      std::cerr << "Failed to open persistance file :" << persistance_file << std::endl;
+      return;
+    }
+    fstr >> cfbag;
+    GenApi::CNodeMapPtr mp = tl_dev_->GetRemoteIStPort()->GetINodeMap();
+    cfbag.LoadFromBag(mp);
   }
 
   GenApi::INodeMap *StCameraInterfaceImpl::getNodeMap(const std::string &genicam_module)

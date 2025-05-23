@@ -214,6 +214,17 @@ namespace stcamera
     }
 
   }
+  void StCameraNodeImpl::setPersistanceFile(
+      bool i_use_persistance_file,
+      std::string i_persistance_file
+      ){
+    use_persistance_file = i_use_persistance_file;
+    if (use_persistance_file){
+      RCLCPP_INFO(p_stcamera_node_->get_logger(),"stcamera_node_impl.cpp: Setting persistance file to %s", i_persistance_file.c_str());
+      persistance_file = i_persistance_file;
+    }
+  }
+
   bool StCameraNodeImpl::initializeCamera(StApi::IStInterface *p_iface,
       const StApi::IStDeviceInfo *p_devinfo,
       std::string camera_tf_frame
@@ -280,7 +291,9 @@ namespace stcamera
           GenTL::DEVICE_ACCESS_CONTROL);
 
       StCameraInterface *pcif = new StCameraInterfaceImpl(
-          dev, p_stcamera_node_, key, camera_tf_frame, &p_stcamera_node_->param_, clock_);
+          dev, p_stcamera_node_, key, camera_tf_frame, &p_stcamera_node_->param_, clock_,
+          use_persistance_file, persistance_file
+          );
       map_camera_[key] = pcif;
 
       // store and publish connection msg

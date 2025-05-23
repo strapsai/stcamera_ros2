@@ -113,6 +113,9 @@ namespace stcamera
        */
       rclcpp::Logger::Level getLoggerLevel(const rclcpp::Node *nh) const;
 
+      bool use_persistance_file_ = false;
+      std::string persistance_file_ = "";
+
     protected:
 
       /** Store the list of allowed camera to connect, including special key-
